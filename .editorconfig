@@ -1,0 +1,17 @@
+# http://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+# 编码
+charset = utf-8
+# 缩进风格，tab或space
+indent_style = space
+# 缩进的宽度，整数
+indent_size = 4
+# 文件不以一个空白行结尾
+insert_final_newline = false
+# 除去换行行首的任意空白字符
+trim_trailing_whitespace = true
+

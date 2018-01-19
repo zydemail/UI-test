@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src\testService.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">src/</a> testService.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">77.27% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>17/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">58.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>7/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">77.27% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>17/22</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44</td><td class="line-coverage quiet"><span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">define(function(require, exports, module) {
+    var deferredRequest = require('./common/deferredRequest');
+    var videoData = {};
+&nbsp;
+    module.exports = APP.createService({
+        getVideoInfo: function(params) {
+            var self = this;
+            var id = params.tvid + "-" + params.select;
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (!videoData[id]) {
+                return deferredRequest.jsonp("http://mixer.video.iqiyi.com/jp/mixin/videos/" + params.tvid, {
+                    select: params.select || ""
+                }).then(function(data) {
+                    data.templateType = self.getVideoTemplateType(data);
+                    videoData[id] = data;
+                    return data;
+                });
+            } else {
+<span class="cstat-no" title="statement not covered" >                return $.Deferred(<span class="fstat-no" title="function not covered" >function(deferred) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    deferred.resolve(videoData[id]);</span>
+                }).promise();
+            }
+        },
+        getVideoTemplateType: function(data) { // 根据vi视频信息判断视频模板类型
+            // 接口wiki: http://wiki.qiyi.domain/pages/viewpage.action?pageId=10763348
+            // 1、"vType": 0         //0:PPC , 1:PGC , 2:UGC
+            // 2、"subType": 1,      //新增判断视频是 7,单视频、1,长视频剧集类、2,长视频来源类
+            // 3、"c": 1,            // 频道Id
+            var templateType = "";
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (data.videoType == 1) {
+<span class="cstat-no" title="statement not covered" >                templateType = "ALBUM";</span>
+            } else <span class="missing-if-branch" title="if path not taken" >I</span>if (data.videoType == 2) {
+<span class="cstat-no" title="statement not covered" >                templateType = "SOURCE";</span>
+            } else {
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (data.channelId == 1 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!data.videoType)</span> {
+<span class="cstat-no" title="statement not covered" >                    templateType = "MOVIE";</span>
+                } else {
+                    templateType = "SHORT";
+                }
+            }
+            return templateType;
+        }
+&nbsp;
+    });
+});</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jul 27 2016 18:21:46 GMT+0800 (中国标准时间)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
